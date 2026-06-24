@@ -5,7 +5,6 @@ import cez.patient.query.SearchPatientsQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
-import cez.patient.dto.PatientPagedRequest;
 import cez.patient.model.Patient;
 import cez.patient.repository.PatientRepository;
 

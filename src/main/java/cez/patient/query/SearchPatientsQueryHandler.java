@@ -1,7 +1,6 @@
 package cez.patient.query;
 
 import cez.common.cqrs.QueryHandler;
-import cez.patient.dto.PatientPagedRequest;
 import cez.patient.dto.PatientResponse;
 import cez.patient.service.IPatientService;
 import org.springframework.data.domain.Page;

@@ -2,7 +2,6 @@ package cez.prescription.query;
 
 import cez.common.cqrs.QueryHandler;
 import cez.prescription.dto.PrescriptionResponse;
-import cez.prescription.model.Prescription;
 import cez.prescription.repository.IPrescriptionRepository;
 import org.springframework.stereotype.Component;
 
