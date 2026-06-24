@@ -16,6 +16,6 @@ public class DeletePrescriptionCommandHandler implements CommandHandler<DeletePr
 
     @Override
     public void handle(DeletePrescriptionCommand command) {
-        prescriptionRepository.removeByPesel(command.pesel());
+        prescriptionRepository.removeByPeselAndId(command.pesel(),command.prescriptionId());
     }
 }

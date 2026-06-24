@@ -1,6 +1,6 @@
 package cez.patient.dto;
 
-public record PatientPagedResponse(
+public record PatientPagedRequest(
     String pesel,
     String nazwisko,
     String imie,

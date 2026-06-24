@@ -20,6 +20,7 @@ public class GetAllPrescriptionByPeselQueryHandler implements QueryHandler<GetAl
     public List<PrescriptionResponse> handle(GetAllPrescriptionByPeselQuery query) {
         return prescriptionRepository.findAllByPesel(query.pesel()).stream()
                 .map(prescription -> new PrescriptionResponse(
+                        prescription.prescriptionId(),
                         prescription.pesel(),
                         prescription.nazwaLeku(),
                         prescription.dawka()

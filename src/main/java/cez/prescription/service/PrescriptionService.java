@@ -40,7 +40,7 @@ public class PrescriptionService {
         }
 
         List<PrescriptionResponse> pageContent = filtered.subList(start, end).stream()
-                .map(p -> new PrescriptionResponse(p.pesel(), p.nazwaLeku(), p.dawka()))
+                .map(p -> new PrescriptionResponse(p.prescriptionId(),p.pesel(), p.nazwaLeku(), p.dawka()))
                 .toList();
 
         return new PageImpl<>(pageContent, query.pageable(), total);

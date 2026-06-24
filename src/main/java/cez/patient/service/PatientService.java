@@ -1,10 +1,11 @@
 package cez.patient.service;
 
+import cez.patient.dto.PatientResponse;
 import cez.patient.query.SearchPatientsQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
-import cez.patient.dto.PatientPagedResponse;
+import cez.patient.dto.PatientPagedRequest;
 import cez.patient.model.Patient;
 import cez.patient.repository.PatientRepository;
 
@@ -20,7 +21,7 @@ public class PatientService implements IPatientService {
         this.patientRepository = patientRepository;
     }
 
-    public Page<PatientPagedResponse> searchPatients(SearchPatientsQuery query) {
+    public Page<PatientResponse> searchPatients(SearchPatientsQuery query) {
         List<Patient> filtered = patientRepository.findAll().stream()
                 .filter(p -> (query.lastName() != null && !query.lastName().isBlank() &&
                         p.nazwisko().toLowerCase().contains(query.lastName().toLowerCase())) ||
@@ -41,12 +42,10 @@ public class PatientService implements IPatientService {
 
         return new PageImpl<>(
                 filtered.subList(start, end).stream()
-                        .map(p -> new PatientPagedResponse(
+                        .map(p -> new PatientResponse(
                                 p.pesel(),
                                 p.nazwisko(),
-                                p.imie(),
-                                query.pageable().getPageNumber(),
-                                query.pageable().getPageSize()
+                                p.imie()
                         ))
                         .toList(),
                 query.pageable(),

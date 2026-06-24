@@ -1,7 +1,8 @@
 package cez.patient.query;
 
 import cez.common.cqrs.Query;
-import cez.patient.dto.PatientPagedResponse;
+import cez.patient.dto.PatientPagedRequest;
+import cez.patient.dto.PatientResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -9,4 +10,4 @@ public record SearchPatientsQuery(
         Pageable pageable,
         String lastName,
         String pesel
-) implements Query<Page<PatientPagedResponse>> {}
+) implements Query<Page<PatientResponse>> {}

@@ -1,8 +1,6 @@
 package cez.prescription.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 public record CreatePrescriptionRequest(
         @NotBlank(message = "PESEL nie może być pusty")
@@ -13,6 +11,7 @@ public record CreatePrescriptionRequest(
         @NotBlank(message = "Nazwa leku nie może być pusta")
         String nazwaLeku,
 
-        @NotBlank(message = "Dawka nie może być pusta")
+        @NotNull(message = "Dawka nie może być pusta")
+        @Positive(message = "Dawka musi być większa od zera")
         Double dawka
 ) {}
