@@ -84,10 +84,10 @@ src/main/java/cez/
 └── prescription/
     ├── command/                  ← CreatePrescriptionCommand, DeletePrescriptionCommand + handlery
     ├── query/                    ← GetAllPrescriptionByPeselQuery, SearchPrescriptionsQuery + handlery
-    ├── service/
-    ├── repository/
-    ├── controller/
-    ├── dto/
+    ├── service/                  ← logika filtrowania i stronicowania
+    ├── repository/               ← przechowywanie danych w ConcurrentHashMap
+    ├── controller/               ← warstwa HTTP (REST)
+    ├── dto/                      ← obiekty żądania i odpowiedzi
     └── model/                    ← rekord Prescription
 ```
 
