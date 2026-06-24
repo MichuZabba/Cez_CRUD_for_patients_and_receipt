@@ -1,0 +1,639 @@
+{
+  "info": {
+    "_postman_id": "fc3600bd-7562-4a29-af3f-796fd70985ea",
+    "name": "Cez api",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53218747"
+  },
+  "item": [
+    {
+      "name": "prescriptions",
+      "item": [
+        {
+          "name": "search",
+          "item": [
+            {
+              "name": "search Prescriptions",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nazwaLeku\": \"\",\n  \"pesel\": \"\",\n  \"page\": 0,\n  \"size\": 5\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/prescriptions/search",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "prescriptions",
+                    "search"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"nazwaLeku\": \"string\",\n  \"pesel\": \"string\",\n  \"page\": 5493,\n  \"size\": 2995\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/prescriptions/search",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "prescriptions",
+                        "search"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"totalElements\": 5853,\n  \"totalPages\": 9426,\n  \"size\": 8076,\n  \"content\": [\n    {\n      \"prescriptionId\": \"8b75789c-8be7-7c17-44e5-72b9080958d6\",\n      \"pesel\": \"string\",\n      \"nazwaLeku\": \"string\",\n      \"dawka\": 8768.218818319874\n    },\n    {\n      \"prescriptionId\": \"115b465f-2448-9335-af3c-26ab8c3cfc6d\",\n      \"pesel\": \"string\",\n      \"nazwaLeku\": \"string\",\n      \"dawka\": 1935.1500171984815\n    }\n  ],\n  \"number\": 184,\n  \"first\": true,\n  \"last\": false,\n  \"numberOfElements\": 7487,\n  \"sort\": {\n    \"empty\": true,\n    \"sorted\": true,\n    \"unsorted\": false\n  },\n  \"pageable\": {\n    \"offset\": 3882,\n    \"pageSize\": 590,\n    \"pageNumber\": 3323,\n    \"paged\": true,\n    \"sort\": {\n      \"empty\": true,\n      \"sorted\": false,\n      \"unsorted\": false\n    },\n    \"unpaged\": false\n  },\n  \"empty\": true\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "create",
+          "item": [
+            {
+              "name": "create Prescription",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dawka\": 2,\n  \"nazwaLeku\": \"apap\",\n  \"pesel\": \"00000000000\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/prescriptions/create",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "prescriptions",
+                    "create"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"dawka\": 5786.236299598858,\n  \"nazwaLeku\": \"string\",\n  \"pesel\": \"00000000000\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/prescriptions/create",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "prescriptions",
+                        "create"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "GetPrescriptionByPesel",
+          "item": [
+            {
+              "name": "get Prescription By Pesel",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/prescriptions/:pesel",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "prescriptions",
+                    ":pesel"
+                  ],
+                  "variable": [
+                    {
+                      "key": "pesel",
+                      "value": "00000000100"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/prescriptions/:pesel",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "prescriptions",
+                        ":pesel"
+                      ],
+                      "variable": [
+                        {
+                          "key": "pesel",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "[\n  {\n    \"prescriptionId\": \"06d0ac84-d5d3-7532-c5ae-52157764254c\",\n    \"pesel\": \"string\",\n    \"nazwaLeku\": \"string\",\n    \"dawka\": 2693.9476585246393\n  },\n  {\n    \"prescriptionId\": \"9694a7d9-b74c-e1fb-5eb1-3580119c0369\",\n    \"pesel\": \"string\",\n    \"nazwaLeku\": \"string\",\n    \"dawka\": 1840.5090213994647\n  }\n]"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "delete",
+          "item": [
+            {
+              "name": "delete Prescription",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prescriptionId\": \"b016f3b7-3e50-44da-902b-da328f02d74e\",\n  \"pesel\": \"70019170019\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/prescriptions/delete",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "prescriptions",
+                    "delete"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"prescriptionId\": \"02009e53-dc73-9cfa-e3fb-28f9271b0566\",\n  \"pesel\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/prescriptions/delete",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "prescriptions",
+                        "delete"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "patients",
+      "item": [
+        {
+          "name": "search",
+          "item": [
+            {
+              "name": "get Patients",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"pesel\": \"string\",\n  \"nazwisko\": \"string\",\n  \"imie\": \"string\",\n  \"page\": 3210,\n  \"size\": 954\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/patients/search",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "patients",
+                    "search"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"pesel\": \"string\",\n  \"nazwisko\": \"string\",\n  \"imie\": \"string\",\n  \"page\": 3210,\n  \"size\": 954\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/patients/search",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "patients",
+                        "search"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"totalElements\": 1750,\n  \"totalPages\": 1497,\n  \"size\": 3042,\n  \"content\": [\n    {\n      \"pesel\": \"string\",\n      \"nazwisko\": \"string\",\n      \"imie\": \"string\",\n      \"page\": 1326,\n      \"size\": 9015\n    },\n    {\n      \"pesel\": \"string\",\n      \"nazwisko\": \"string\",\n      \"imie\": \"string\",\n      \"page\": 706,\n      \"size\": 8404\n    }\n  ],\n  \"number\": 7576,\n  \"first\": true,\n  \"last\": false,\n  \"numberOfElements\": 6941,\n  \"sort\": {\n    \"empty\": true,\n    \"sorted\": false,\n    \"unsorted\": true\n  },\n  \"pageable\": {\n    \"offset\": 5513,\n    \"pageSize\": 5368,\n    \"pageNumber\": 7028,\n    \"paged\": true,\n    \"sort\": {\n      \"empty\": true,\n      \"sorted\": false,\n      \"unsorted\": false\n    },\n    \"unpaged\": true\n  },\n  \"empty\": false\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "create",
+          "item": [
+            {
+              "name": "create Patient",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"imie\": \"str\",\n  \"nazwisko\": \"string\",\n  \"pesel\": \"70019170019\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/patients/create",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "patients",
+                    "create"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"imie\": \"str\",\n  \"nazwisko\": \"string\",\n  \"pesel\": \"70019170019\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/patients/create",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "patients",
+                        "create"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "ByPesel",
+          "item": [
+            {
+              "name": "get Patient By Pesel",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/patients/:pesel",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "patients",
+                    ":pesel"
+                  ],
+                  "variable": [
+                    {
+                      "key": "pesel",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/patients/:pesel",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "patients",
+                        ":pesel"
+                      ],
+                      "variable": [
+                        {
+                          "key": "pesel",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"pesel\": \"string\",\n  \"imie\": \"string\",\n  \"nazwisko\": \"string\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "remove Patient",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/patients/:pesel",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "patients",
+                    ":pesel"
+                  ],
+                  "variable": [
+                    {
+                      "key": "pesel",
+                      "value": "string"
+                    }
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "OK",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/patients/:pesel",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "patients",
+                        ":pesel"
+                      ],
+                      "variable": [
+                        {
+                          "key": "pesel",
+                          "value": "string"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [],
+                  "cookie": [],
+                  "body": ""
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ]
+}
