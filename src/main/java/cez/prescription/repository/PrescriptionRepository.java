@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
@@ -20,8 +21,16 @@ public class PrescriptionRepository implements IPrescriptionRepository {
         return prescriptions.getOrDefault(pesel, List.of());
     }
 
-    public void removeByPesel(String pesel) {
-        prescriptions.remove(pesel);
+    public void removeByPeselAndId(String pesel, UUID prescriptionId) {
+        if (prescriptions.containsKey(pesel)) {
+            List<Prescription> patientPrescriptions = prescriptions.get(pesel);
+
+            patientPrescriptions.removeIf(prescription -> prescription.prescriptionId().equals(prescriptionId));
+
+            if (patientPrescriptions.isEmpty()) {
+                prescriptions.remove(pesel);
+            }
+        }
     }
 
     public List<Prescription> findAll() {

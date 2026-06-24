@@ -5,12 +5,14 @@ import cez.prescription.command.CreatePrescriptionCommandHandler;
 import cez.prescription.command.DeletePrescriptionCommand;
 import cez.prescription.command.DeletePrescriptionCommandHandler;
 import cez.prescription.dto.CreatePrescriptionRequest;
+import cez.prescription.dto.DeletePrescriptionRequest;
 import cez.prescription.dto.PrescriptionPagedRequest;
 import cez.prescription.dto.PrescriptionResponse;
 import cez.prescription.query.GetAllPrescriptionByPeselQuery;
 import cez.prescription.query.GetAllPrescriptionByPeselQueryHandler;
 import cez.prescription.query.SearchPrescriptionsQuery;
 import cez.prescription.query.SearchPrescriptionsQueryHandler;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,26 +28,26 @@ import java.util.List;
 @EnableSpringDataWebSupport
 public class PrescriptionController {
 
-    private final CreatePrescriptionCommandHandler CreatePrescriptionCommandHandler;
-    private final GetAllPrescriptionByPeselQueryHandler GetAllPrescriptionByPeselQueryHandler;
-    private final DeletePrescriptionCommandHandler DeletePrescriptionCommandHandler;
-    private final SearchPrescriptionsQueryHandler SearchPrescriptionsQueryHandler;
+    private final CreatePrescriptionCommandHandler createPrescriptionCommandHandler;
+    private final GetAllPrescriptionByPeselQueryHandler getAllPrescriptionByPeselQueryHandler;
+    private final DeletePrescriptionCommandHandler deletePrescriptionCommandHandler;
+    private final SearchPrescriptionsQueryHandler searchPrescriptionsQueryHandler;
 
     public PrescriptionController(CreatePrescriptionCommandHandler createPrescriptionCommandHandler, GetAllPrescriptionByPeselQueryHandler getAllPrescriptionByPeselQueryHandler, DeletePrescriptionCommandHandler deletePrescriptionCommandHandler, SearchPrescriptionsQueryHandler searchPrescriptionsQueryHandler) {
-        this.CreatePrescriptionCommandHandler = createPrescriptionCommandHandler;
-        this.GetAllPrescriptionByPeselQueryHandler = getAllPrescriptionByPeselQueryHandler;
-        this.DeletePrescriptionCommandHandler = deletePrescriptionCommandHandler;
-        this.SearchPrescriptionsQueryHandler = searchPrescriptionsQueryHandler;
+        this.createPrescriptionCommandHandler = createPrescriptionCommandHandler;
+        this.getAllPrescriptionByPeselQueryHandler = getAllPrescriptionByPeselQueryHandler;
+        this.deletePrescriptionCommandHandler = deletePrescriptionCommandHandler;
+        this.searchPrescriptionsQueryHandler = searchPrescriptionsQueryHandler;
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Void> createPrescription(@RequestBody CreatePrescriptionRequest request) {
+    public ResponseEntity<Void> createPrescription(@Valid @RequestBody CreatePrescriptionRequest request) {
         CreatePrescriptionCommand command = new CreatePrescriptionCommand(
                 request.pesel(),
                 request.nazwaLeku(),
                 request.dawka()
         );
-        CreatePrescriptionCommandHandler.handle(command);
+        createPrescriptionCommandHandler.handle(command);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
     @PostMapping("/search")
@@ -55,21 +57,21 @@ public class PrescriptionController {
         Pageable pageable = PageRequest.of(request.page(), request.size());
 
         SearchPrescriptionsQuery query = new SearchPrescriptionsQuery(pageable, request.nazwaLeku(), request.pesel());
-        Page<PrescriptionResponse> result = SearchPrescriptionsQueryHandler.handle(query);
+        Page<PrescriptionResponse> result = searchPrescriptionsQueryHandler.handle(query);
 
         return ResponseEntity.ok(result);
     }
 
     @GetMapping("/{pesel}")
     public ResponseEntity<List<PrescriptionResponse>> getPrescriptionByPesel(@PathVariable String pesel) {
-        List<PrescriptionResponse> response = GetAllPrescriptionByPeselQueryHandler.handle(new GetAllPrescriptionByPeselQuery(pesel));
+        List<PrescriptionResponse> response = getAllPrescriptionByPeselQueryHandler.handle(new GetAllPrescriptionByPeselQuery(pesel));
 
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{pesel}")
-    public ResponseEntity<Void> removePrescription(@PathVariable String pesel) {
-        DeletePrescriptionCommandHandler.handle(new DeletePrescriptionCommand(pesel));
+    @DeleteMapping("/delete")
+    public ResponseEntity<Void> deletePrescription(@RequestBody DeletePrescriptionRequest request) {
+        deletePrescriptionCommandHandler.handle(new DeletePrescriptionCommand(request.prescriptionId(), request.pesel()));
         return ResponseEntity.noContent().build();
     }
 }

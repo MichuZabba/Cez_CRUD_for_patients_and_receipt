@@ -1,13 +1,13 @@
 package cez.patient.query;
 
 import cez.common.cqrs.QueryHandler;
-import cez.patient.dto.PatientPagedResponse;
+import cez.patient.dto.PatientResponse;
 import cez.patient.service.IPatientService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SearchPatientsQueryHandler implements QueryHandler<SearchPatientsQuery, Page<PatientPagedResponse>> {
+public class SearchPatientsQueryHandler implements QueryHandler<SearchPatientsQuery, Page<PatientResponse>> {
 
     private final IPatientService patientService;
 
@@ -16,7 +16,7 @@ public class SearchPatientsQueryHandler implements QueryHandler<SearchPatientsQu
     }
 
     @Override
-    public Page<PatientPagedResponse> handle(SearchPatientsQuery query) {
+    public Page<PatientResponse> handle(SearchPatientsQuery query) {
         return patientService.searchPatients(query);
     }
 }

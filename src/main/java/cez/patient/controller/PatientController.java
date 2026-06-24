@@ -12,13 +12,12 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import cez.patient.dto.PatientCreateRequest;
-import cez.patient.dto.PatientPagedResponse;
+import cez.patient.dto.PatientPagedRequest;
 import cez.patient.dto.PatientResponse;
 
 @RestController
@@ -48,12 +47,12 @@ public class PatientController {
     }
 
     @PostMapping("/search")
-    public ResponseEntity<Page<PatientPagedResponse>> getPatients(
-            @RequestBody PatientPagedResponse request) {
+    public ResponseEntity<Page<PatientResponse>> getPatients(
+            @RequestBody PatientPagedRequest request) {
 
         Pageable pageable = PageRequest.of(request.page(), request.size());
         SearchPatientsQuery query = new SearchPatientsQuery(pageable, request.nazwisko(), request.pesel());
-        Page<PatientPagedResponse> result = searchPatientsQueryHandler.handle(query);
+        Page<PatientResponse> result = searchPatientsQueryHandler.handle(query);
 
         return ResponseEntity.ok(result);
     }

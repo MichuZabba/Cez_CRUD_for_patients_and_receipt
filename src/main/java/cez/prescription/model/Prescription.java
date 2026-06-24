@@ -1,3 +1,5 @@
 package cez.prescription.model;
 
-public record Prescription(String pesel, String nazwaLeku, Double dawka){}
+import java.util.UUID;
+
+public record Prescription(UUID prescriptionId, String pesel, String nazwaLeku, Double dawka){}

@@ -2,7 +2,6 @@ package cez.prescription.query;
 
 import cez.common.cqrs.QueryHandler;
 import cez.prescription.dto.PrescriptionResponse;
-import cez.prescription.model.Prescription;
 import cez.prescription.repository.IPrescriptionRepository;
 import org.springframework.stereotype.Component;
 
@@ -20,6 +19,7 @@ public class GetAllPrescriptionByPeselQueryHandler implements QueryHandler<GetAl
     public List<PrescriptionResponse> handle(GetAllPrescriptionByPeselQuery query) {
         return prescriptionRepository.findAllByPesel(query.pesel()).stream()
                 .map(prescription -> new PrescriptionResponse(
+                        prescription.prescriptionId(),
                         prescription.pesel(),
                         prescription.nazwaLeku(),
                         prescription.dawka()
