@@ -4,6 +4,7 @@ import cez.patient.dto.PatientResponse;
 import cez.patient.query.SearchPatientsQuery;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import cez.patient.model.Patient;
 import cez.patient.repository.PatientRepository;
@@ -22,33 +23,61 @@ public class PatientService implements IPatientService {
 
     public Page<PatientResponse> searchPatients(SearchPatientsQuery query) {
         List<Patient> filtered = patientRepository.findAll().stream()
-                .filter(p -> (query.lastName() != null && !query.lastName().isBlank() &&
-                        p.nazwisko().toLowerCase().contains(query.lastName().toLowerCase())) ||
-                        (query.pesel() != null && !query.pesel().isBlank() &&
-                                p.pesel().equals(query.pesel())) ||
-                        ((query.lastName() == null || query.lastName().isBlank()) &&
-                                (query.pesel() == null || query.pesel().isBlank())))
-                .sorted(Comparator.comparing((Patient p) -> p.nazwisko().toLowerCase())
-                        .thenComparing(p -> p.imie().toLowerCase()))
+                .filter(patient -> matchesCriteria(patient, query))
+                .sorted(getPatientComparator())
                 .toList();
 
-        int start = (int) query.pageable().getOffset();
-        int end = Math.min(start + query.pageable().getPageSize(), filtered.size());
+        return createPage(filtered, query.pageable());
+    }
 
-        if (start >= filtered.size()) {
-            return new PageImpl<>(List.of(), query.pageable(), filtered.size());
+
+    private boolean matchesCriteria(Patient patient, SearchPatientsQuery query) {
+        boolean hasLastNameQuery = isNotEmpty(query.lastName());
+        boolean hasPeselQuery = isNotEmpty(query.pesel());
+
+        if (!hasLastNameQuery && !hasPeselQuery) {
+            return true;
         }
 
-        return new PageImpl<>(
-                filtered.subList(start, end).stream()
-                        .map(p -> new PatientResponse(
-                                p.pesel(),
-                                p.nazwisko(),
-                                p.imie()
-                        ))
-                        .toList(),
-                query.pageable(),
-                filtered.size()
+        boolean matchesLastName = hasLastNameQuery &&
+                patient.nazwisko().toLowerCase().contains(query.lastName().toLowerCase());
+
+        boolean matchesPesel = hasPeselQuery &&
+                patient.pesel().equals(query.pesel());
+
+        return matchesLastName || matchesPesel;
+    }
+
+    private Comparator<Patient> getPatientComparator() {
+        return Comparator.comparing((Patient p) -> p.nazwisko().toLowerCase())
+                .thenComparing(p -> p.imie().toLowerCase());
+    }
+
+    private boolean isNotEmpty(String value) {
+        return value != null && !value.isBlank();
+    }
+
+
+    private Page<PatientResponse> createPage(List<Patient> patients, Pageable pageable) {
+        int start = (int) pageable.getOffset();
+        if (start >= patients.size()) {
+            return new PageImpl<>(List.of(), pageable, patients.size());
+        }
+
+        int end = Math.min(start + pageable.getPageSize(), patients.size());
+
+        List<PatientResponse> content = patients.subList(start, end).stream()
+                .map(this::toPatientResponse)
+                .toList();
+
+        return new PageImpl<>(content, pageable, patients.size());
+    }
+
+    private PatientResponse toPatientResponse(Patient patient) {
+        return new PatientResponse(
+                patient.pesel(),
+                patient.nazwisko(),
+                patient.imie()
         );
     }
 }
