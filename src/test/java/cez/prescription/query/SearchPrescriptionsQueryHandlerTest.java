@@ -1,7 +1,7 @@
 package cez.prescription.query;
 
 import cez.prescription.dto.PrescriptionResponse;
-import cez.prescription.service.PrescriptionService;
+import cez.prescription.service.IPrescriptionService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 class SearchPrescriptionsQueryHandlerTest {
 
     @Mock
-    private PrescriptionService prescriptionService;
+    private IPrescriptionService prescriptionService;
 
     @InjectMocks
     private SearchPrescriptionsQueryHandler handler;
