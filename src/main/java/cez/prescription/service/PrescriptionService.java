@@ -2,6 +2,7 @@ package cez.prescription.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import cez.prescription.dto.PrescriptionResponse;
 import cez.prescription.model.Prescription;
@@ -11,7 +12,7 @@ import cez.prescription.repository.IPrescriptionRepository;
 import java.util.List;
 
 @Service
-public class PrescriptionService {
+public class PrescriptionService implements IPrescriptionService {
 
     private final IPrescriptionRepository prescriptionRepository;
 
@@ -20,29 +21,57 @@ public class PrescriptionService {
     }
 
     public Page<PrescriptionResponse> searchPrescriptions(SearchPrescriptionsQuery query) {
-        List<Prescription> allPrescriptions = prescriptionRepository.findAll();
-
-        List<Prescription> filtered = allPrescriptions.stream()
-                .filter(p -> (query.nazwaLeku() != null && !query.nazwaLeku().isBlank() &&
-                        p.nazwaLeku().toLowerCase().contains(query.nazwaLeku().toLowerCase())) ||
-                        (query.pesel() != null && !query.pesel().isBlank() &&
-                                p.pesel().equals(query.pesel())) ||
-                        ((query.nazwaLeku() == null || query.nazwaLeku().isBlank()) &&
-                                (query.pesel() == null || query.pesel().isBlank())))
+        List<Prescription> filtered = prescriptionRepository.findAll().stream()
+                .filter(prescription -> matchesCriteria(prescription, query))
                 .toList();
 
-        int total = filtered.size();
-        int start = (int) query.pageable().getOffset();
-        int end = Math.min((start + query.pageable().getPageSize()), total);
+        return createPage(filtered, query.pageable());
+    }
 
-        if (start > total) {
-            return new PageImpl<>(List.of(), query.pageable(), total);
+    private boolean matchesCriteria(Prescription prescription, SearchPrescriptionsQuery query) {
+        boolean hasMedicationQuery = isNotEmpty(query.nazwaLeku());
+        boolean hasPeselQuery = isNotEmpty(query.pesel());
+
+        if (!hasMedicationQuery && !hasPeselQuery) {
+            return true;
         }
 
-        List<PrescriptionResponse> pageContent = filtered.subList(start, end).stream()
-                .map(p -> new PrescriptionResponse(p.prescriptionId(),p.pesel(), p.nazwaLeku(), p.dawka()))
+        boolean matchesMedication = hasMedicationQuery &&
+                prescription.nazwaLeku().toLowerCase().contains(query.nazwaLeku().toLowerCase());
+
+        boolean matchesPesel = hasPeselQuery &&
+                prescription.pesel().equals(query.pesel());
+
+        return matchesMedication || matchesPesel;
+    }
+
+    private boolean isNotEmpty(String value) {
+        return value != null && !value.isBlank();
+    }
+
+    private Page<PrescriptionResponse> createPage(List<Prescription> prescriptions, Pageable pageable) {
+        int total = prescriptions.size();
+        int start = (int) pageable.getOffset();
+
+        if (start > total) {
+            return new PageImpl<>(List.of(), pageable, total);
+        }
+
+        int end = Math.min(start + pageable.getPageSize(), total);
+
+        List<PrescriptionResponse> pageContent = prescriptions.subList(start, end).stream()
+                .map(this::toPrescriptionResponse)
                 .toList();
 
-        return new PageImpl<>(pageContent, query.pageable(), total);
+        return new PageImpl<>(pageContent, pageable, total);
+    }
+
+    private PrescriptionResponse toPrescriptionResponse(Prescription prescription) {
+        return new PrescriptionResponse(
+                prescription.prescriptionId(),
+                prescription.pesel(),
+                prescription.nazwaLeku(),
+                prescription.dawka()
+        );
     }
 }

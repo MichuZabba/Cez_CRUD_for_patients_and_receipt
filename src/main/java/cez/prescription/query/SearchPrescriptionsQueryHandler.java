@@ -1,5 +1,6 @@
 package cez.prescription.query;
 
+import cez.prescription.service.IPrescriptionService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 import cez.common.cqrs.QueryHandler;
@@ -9,9 +10,9 @@ import cez.prescription.service.PrescriptionService;
 @Component
 public class SearchPrescriptionsQueryHandler implements QueryHandler<SearchPrescriptionsQuery, Page<PrescriptionResponse>> {
 
-    private final PrescriptionService prescriptionService;
+    private final IPrescriptionService prescriptionService;
 
-    public SearchPrescriptionsQueryHandler(PrescriptionService prescriptionService) {
+    public SearchPrescriptionsQueryHandler(IPrescriptionService prescriptionService) {
         this.prescriptionService = prescriptionService;
     }
 
